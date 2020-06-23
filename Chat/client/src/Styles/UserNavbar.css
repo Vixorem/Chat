@@ -1,0 +1,20 @@
+﻿.userNavbar {
+    display: grid;
+    justify-content: left;
+    background: #8bc3ff;
+    grid-area: userNavbar;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+            "options"
+            "searchBar";
+}
+
+.searchBar {
+    display: flex;
+    grid-area: searchBar;
+    width: 100%;
+}
+
+.options {
+    grid-area: options;
+}

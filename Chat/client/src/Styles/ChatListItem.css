@@ -1,0 +1,42 @@
+﻿.chatListItem {
+    display: grid;
+    margin: 1%;
+    height: complex;
+    background: rgb(255, 255, 255);
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 30% 70%;
+    grid-template-areas:
+         "chatName time"
+         "message message";
+}
+
+.chatListItem:hover {
+    background: rgba(79, 156, 243, 0.4);
+}
+
+.chatName {
+    grid-area: chatName;
+    justify-content: center;
+    white-space: nowrap;
+    margin-left: 1%;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.time {
+    grid-area: time;
+    color: #5e5d5d;
+    text-align: right;
+}
+
+.message {
+    grid-area: message;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-top: 5%;
+    margin-left: 1%;
+    padding-top: 5%;
+    color: rgb(0, 121, 255);
+}

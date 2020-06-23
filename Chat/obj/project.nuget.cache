@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "dgSpecHash": "VeB12lXyH2WTefFImTe5xY4cLwx9Gpgcv3CjDCk/MdoD0nriUe/khSARJev+i6gyCfiZLG9nAZM6WuPc5csZ2g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Victor\\Desktop\\chat\\Chat\\Chat.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Victor\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.0.0\\microsoft.aspnetcore.jsonpatch.3.0.0.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.3.0.0.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\microsoft.csharp\\4.6.0\\microsoft.csharp.4.6.0.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\microsoft.openapi\\1.1.4\\microsoft.openapi.1.1.4.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\swashbuckle.aspnetcore\\5.4.1\\swashbuckle.aspnetcore.5.4.1.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\swashbuckle.aspnetcore.newtonsoft\\5.4.1\\swashbuckle.aspnetcore.newtonsoft.5.4.1.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.4.1\\swashbuckle.aspnetcore.swagger.5.4.1.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.4.1\\swashbuckle.aspnetcore.swaggergen.5.4.1.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.4.1\\swashbuckle.aspnetcore.swaggerui.5.4.1.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\system.data.sqlclient\\4.8.1\\system.data.sqlclient.4.8.1.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "C:\\Users\\Victor\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,19 @@
+﻿.writingArea {
+    min-height: 50%;
+    display: grid;
+    border: solid #a5a3a3 1px;
+    margin-bottom: 5px;
+    grid-area: inputArea;
+    grid-template-columns: 90% auto;
+    grid-template-areas: "textArea sendButton"
+}
+
+.textArea {
+    grid-area: textArea;
+    resize: none;
+}
+
+.sendButton {
+    margin-left: 5%;
+    grid-area: sendButton;
+}

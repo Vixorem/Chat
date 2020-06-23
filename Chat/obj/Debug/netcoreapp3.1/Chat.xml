@@ -1,0 +1,886 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Chat</name>
+    </assembly>
+    <members>
+        <member name="T:Chat.ClientModels.GroupDto">
+            <summary>
+            Клиентская модель группы
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.GroupDto.Id">
+            <summary>
+            Guid группы
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.GroupDto.Name">
+            <summary>
+            Название группы
+            </summary>
+        </member>
+        <member name="M:Chat.ClientModels.GroupDto.ConvertFromDomain(Chat.Models.Group)">
+            <summary>
+            Конвертирует модель бизнес-логики в клиентскую модель
+            </summary>
+            <param name="group">Экземпляр модели бизнес-логики</param>
+        </member>
+        <member name="T:Chat.ClientModels.MessageDto">
+            <summary>
+            Клиентская модель текстового сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessageDto.Id">
+            <summary>
+            Идентификатор сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessageDto.MessageType">
+            <summary>
+            Тип сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessageDto.Content">
+            <summary>
+            Текстовое содержимое сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessageDto.Sender">
+            <summary>
+            Отправитель сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessageDto.ReceiverId">
+            <summary>
+            Получатель сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessageDto.SentTime">
+            <summary>
+            Время отправки
+            </summary>
+        </member>
+        <member name="M:Chat.ClientModels.MessageDto.ConvertFromDomain(Chat.Models.TextMessage)">
+            <summary>
+            Конвертирует модель бизнес-логики в клиентскую модель
+            </summary>
+            <param name="textMessage">Экземпляр модели бизнес-логики</param>
+        </member>
+        <member name="T:Chat.ClientModels.MessagePreviewDto">
+            <summary>
+            Содержит информацию для превью чата
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessagePreviewDto.ChatId">
+            <summary>
+            Guid чата (пользователя или группы)
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessagePreviewDto.ChatName">
+            <summary>
+            Название чата (имя группы или логин пользователя)
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessagePreviewDto.LastMessage">
+            <summary>
+            Последнее сообщение в чате
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessagePreviewDto.SentTime">
+            <summary>
+            Дата отправки
+            </summary>
+        </member>
+        <member name="M:Chat.ClientModels.MessagePreviewDto.ConvertFromDomain(Chat.Models.MessagePreview)">
+            <summary>
+            Конвертирует модель бизнес-логики в клиентскую модель
+            </summary>
+            <param name="preview">Экземпляр модели бизнес-логики</param>
+        </member>
+        <member name="T:Chat.ClientModels.MessageType">
+            <summary>
+            Типы сообщений
+            </summary>
+        </member>
+        <member name="T:Chat.ClientModels.UserDto">
+            <summary>
+            Клиентская модель пользователя
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.UserDto.Id">
+            <summary>
+            Guid пользователя
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.UserDto.Login">
+            <summary>
+            Логин пользователя
+            </summary>
+        </member>
+        <member name="M:Chat.ClientModels.UserDto.ConvertFromDomain(Chat.Models.User)">
+            <summary>
+            Конвертирует модель бизнес-логики в клиентскую модель
+            </summary>
+            <param name="user">Экземпляр модели бизнес-логики</param>
+        </member>
+        <member name="M:Chat.Controllers.GroupController.#ctor(Chat.Services.Abstracts.IGroupService)">
+            <summary>
+            .ctor
+            </summary>
+        </member>
+        <member name="M:Chat.Controllers.GroupController.GetGroupById(System.Guid)">
+            <summary>
+            Возвращает группу
+            </summary>
+            <param name="groupId">Guid группы</param>
+        </member>
+        <member name="M:Chat.Controllers.GroupController.GetExistingGroupsForUser(System.Guid)">
+            <summary>
+            Возвращает список групповых бесед
+            </summary>
+            <param name="userId">Guid пользователя, для которого загружается список</param>
+        </member>
+        <member name="M:Chat.Controllers.GroupController.RemoveUserFromGroup(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Удаляет пользователя из группы
+            </summary>
+            <param name="groupId">Guid группы</param>
+            <param name="removerId">Guid пользователя, который удаляет</param>
+            <param name="removeeId">Guid пользователя, которого удаляют</param>
+        </member>
+        <member name="M:Chat.Controllers.MessageController.#ctor(Chat.Services.Abstracts.IMessageService)">
+            <summary>
+            .ctor
+            </summary>
+        </member>
+        <member name="M:Chat.Controllers.MessageController.GetChatHistory(System.Guid,System.Guid,System.Int32)">
+            <summary>
+            Возвращает историю сообщений для линчной или групповой беседы
+            </summary>
+            <param name="chatId">Guid группы или беседы, из которых загружается история</param>
+            <param name="userId">Guid пользователя, для которого загружается история</param>
+            <param name="offset">Сдвиг от последнего сообщения в чате</param>
+        </member>
+        <member name="M:Chat.Controllers.MessageController.GetMessagePreviewsForUser(System.Guid,System.Int32)">
+            <summary>
+            Возвращает превью сообщений чата
+            </summary>
+            <param name="userId">Guid пользователя</param>
+            <param name="offset">Сдвиг от последнего превью</param>
+        </member>
+        <member name="M:Chat.Controllers.MessageController.SendTextMessage(System.Guid,System.Guid,System.String)">
+            <summary>
+            Отправляет сообщение
+            </summary>
+            <param name="senderId">Guid отправителя</param>
+            <param name="receiverId">Guid получателя</param>
+            <param name="content">Содержимое текстового сообщения</param>
+        </member>
+        <member name="T:Chat.Controllers.UserController">
+            <summary>
+            Реализует методы для работы с пользователями
+            </summary>
+        </member>
+        <member name="M:Chat.Controllers.UserController.#ctor(Chat.Services.Abstracts.IUserService)">
+            <summary>
+            .ctor
+            </summary>
+        </member>
+        <member name="M:Chat.Controllers.UserController.GetUserById(System.Guid)">
+            <summary>
+            Возвращает пользователя по Guid
+            </summary>
+            <param name="userId">Guid пользователя</param>
+        </member>
+        <member name="M:Chat.Controllers.UserController.GetExistingDialogsForUser(System.Guid)">
+            <summary>
+            Возвращает список личных бесед
+            </summary>
+            <param name="userId">Guid пользователя, для которого загружается список</param>
+        </member>
+        <member name="M:Chat.Controllers.UserController.GetUserByLogin(System.String)">
+            <summary>
+            Возвращает пользователя по логину
+            </summary>
+            <param name="login">Логин пользователя</param>
+        </member>
+        <member name="M:Chat.Controllers.UserController.GetUsersInGroup(System.Guid,System.Guid)">
+            <summary>
+            Возвращает список участников беседы
+            </summary>
+            <param name="groupId">Guid группового чата</param>
+            <param name="userId">Guid пользователя, для которого выполняется запрос</param>
+        </member>
+        <member name="M:Chat.Controllers.UserController.AddUserToGroup(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Добавляет пользователя в группу
+            </summary>
+            <param name="addeeId">Guid пользователя, которого добавляют</param>
+            <param name="adderId">Guid пользователя, который добавляет</param>
+            <param name="groupId">Guid группы</param>
+        </member>
+        <member name="M:Chat.Controllers.UserController.StartConvoWithUser(System.Guid,System.Guid)">
+            <summary>
+            Создает личную беседу
+            </summary>
+            <param name="initiatorId">Инициатор беседы</param>
+            <param name="interlocutorId">Собеседник</param>
+        </member>
+        <member name="M:Chat.Controllers.UserController.SignUpUser(System.String,System.String)">
+            <summary>
+            Регистрирует нового пользователя
+            </summary>
+            <param name="login">Логин</param>
+            <param name="password">Пароль</param>
+        </member>
+        <member name="M:Chat.Controllers.UserController.AuthenticateUser(System.String,System.String)">
+            <summary>
+            Аутентификация пользователя
+            </summary>
+            <param name="login">Логин</param>
+            <param name="password">Пароль</param>
+        </member>
+        <member name="T:Chat.DbUtils.DbParam">
+            <summary>
+            Содержит связку (имя параметра, значение параметра) для хранимой процедуры
+            </summary>
+        </member>
+        <member name="P:Chat.DbUtils.DbParam.Name">
+            <summary>
+            Имя параметра
+            </summary>
+        </member>
+        <member name="P:Chat.DbUtils.DbParam.Value">
+            <summary>
+            Значение параметра
+            </summary>
+        </member>
+        <member name="M:Chat.DbUtils.DbParam.#ctor(System.String,System.Object)">
+            <summary>
+            .ctor
+            </summary>
+            <param name="name">Имя параметра</param>
+            <param name="value">Значение параметра</param>
+        </member>
+        <member name="T:Chat.DbUtils.DbRequest">
+            <summary>
+            Класс отвечает за запросы к базе данных
+            </summary>
+        </member>
+        <member name="F:Chat.DbUtils.DbRequest._connectionString">
+            <summary>
+            Содержит строку соединения
+            </summary>
+        </member>
+        <member name="M:Chat.DbUtils.DbRequest.GetItemFromEntry``1(System.String,System.Func{System.Data.IDataReader,``0},Chat.DbUtils.DbParam[])">
+            <summary>
+            Создает объект из строки данных
+            </summary>
+            <param name="storedProcedureName">Имя хранимой процедуры</param>
+            <param name="readerFunc">Делегат (колбэк)</param>
+            <param name="args">Список параметров для процедуры</param>
+            <typeparam name="T">Тип возвращаемого значения</typeparam>
+        </member>
+        <member name="M:Chat.DbUtils.DbRequest.GetItemListFromEntries``1(System.String,System.Func{System.Data.IDataReader,``0},Chat.DbUtils.DbParam[])">
+            <summary>
+            Создает список объектов из полученных строк
+            </summary>
+            <param name="storedProcedureName">Имя хранимой процедуры</param>
+            <param name="readerFunc">Делегат (колбэк). </param>
+            <param name="args">Список параметров для процедуры</param>
+            <typeparam name="T">Тип объектов в списке</typeparam>
+        </member>
+        <member name="M:Chat.DbUtils.DbRequest.ExecuteNonQuery(System.String,Chat.DbUtils.DbParam[])">
+            <summary>
+            Выполняет запрос
+            </summary>
+            <param name="storedProcedureName"></param>
+            <param name="args"></param>
+            <returns>Кол-во затронутых записей или -1</returns>
+        </member>
+        <member name="T:Chat.DbUtils.DbTypeConverter">
+            <summary>
+            Статический класс, реализующий методы для преобразования типов из БД в типы C#
+            </summary>
+        </member>
+        <member name="M:Chat.DbUtils.DbTypeConverter.GetGuid(System.Data.IDataReader,System.String)">
+            <summary>
+            Возвращает объект данного типа
+            </summary>
+            <param name="dataReader">reader по результирующей строке</param>
+            <param name="name">Имя столбца</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.DbUtils.DbTypeConverter.GetString(System.Data.IDataReader,System.String)">
+            <inheritdoc cref="M:Chat.DbUtils.DbTypeConverter.GetGuid(System.Data.IDataReader,System.String)"/>
+        </member>
+        <member name="M:Chat.DbUtils.DbTypeConverter.GetInt(System.Data.IDataReader,System.String)">
+            <inheritdoc cref="M:Chat.DbUtils.DbTypeConverter.GetGuid(System.Data.IDataReader,System.String)"/>
+        </member>
+        <member name="M:Chat.DbUtils.DbTypeConverter.GetDateTime(System.Data.IDataReader,System.String)">
+            <inheritdoc cref="M:Chat.DbUtils.DbTypeConverter.GetGuid(System.Data.IDataReader,System.String)"/>
+        </member>
+        <member name="T:Chat.Models.BaseReceiver">
+            <summary>
+            Класс, который должны реализовывать получатели сообщений
+            </summary>
+        </member>
+        <member name="P:Chat.Models.BaseReceiver.Id">
+            <summary>
+            Guid 
+            </summary>
+        </member>
+        <member name="T:Chat.Models.Group">
+             <summary>
+             Класс описывает групповые чаты
+             </summary>
+            <inheritdoc/>
+        </member>
+        <member name="P:Chat.Models.Group.Name">
+            <summary>
+            Название группы
+            </summary>
+        </member>
+        <member name="T:Chat.Models.MessagePreview">
+            <summary>
+            Содержит информацию для превью чата
+            </summary>
+        </member>
+        <member name="P:Chat.Models.MessagePreview.ChatId">
+            <summary>
+            Guid чата (пользователя или группы)
+            </summary>
+        </member>
+        <member name="P:Chat.Models.MessagePreview.ChatName">
+            <summary>
+            Название чата (имя группы или логин пользователя)
+            </summary>
+        </member>
+        <member name="P:Chat.Models.MessagePreview.LastMessage">
+            <summary>
+            Последнее сообщение в чате
+            </summary>
+        </member>
+        <member name="P:Chat.Models.MessagePreview.SentTime">
+            <summary>
+            Дата отправки
+            </summary>
+        </member>
+        <member name="T:Chat.Models.TextMessage">
+            <summary>
+            Описывает текстовые сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.Models.TextMessage.Id">
+            <summary>
+            Id сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.Models.TextMessage.ReceiverId">
+            <summary>
+            Guid получателя
+            </summary>
+        </member>
+        <member name="P:Chat.Models.TextMessage.Sender">
+            <summary>
+            Отправитель
+            </summary>
+        </member>
+        <member name="P:Chat.Models.TextMessage.Content">
+            <summary>
+            Текстовое содержимое
+            </summary>
+        </member>
+        <member name="P:Chat.Models.TextMessage.SentTime">
+            <summary>
+            Дата отправки
+            </summary>
+        </member>
+        <member name="T:Chat.Models.User">
+            <summary>
+            Описывает пользователя
+            </summary>
+            <inheritdoc cref="T:Chat.Models.BaseReceiver"/>>
+        </member>
+        <member name="P:Chat.Models.User.Login">
+            <summary>
+            Логин пользователя
+            </summary>
+        </member>
+        <member name="T:Chat.Options.ConnectionStringOptions">
+            <summary>
+            Хранит строки соединения
+            </summary>
+        </member>
+        <member name="P:Chat.Options.ConnectionStringOptions.DefaultConnection">
+            <summary>
+            Строка соединения
+            </summary>
+        </member>
+        <member name="T:Chat.Repositories.Abstracts.IGroupRepository">
+            <summary>
+            Интерфейс предназначен для работы с групповыми чатами
+            </summary>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IGroupRepository.GetById(System.Guid)">
+            <summary>
+            Получает группу по Id
+            </summary>
+            <param name="groupId">Guid группы</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IGroupRepository.GetGroupsForUser(System.Guid)">
+            <summary>
+            Получает список групп, в которых состоит юзер
+            </summary>
+            <param name="userId">Guid юзера</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IGroupRepository.Add(System.Guid,System.String)">
+            <summary>
+            Создает группу
+            </summary>
+            <param name="groupId">Guid группы</param>
+            <param name="name">Имя группы</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IGroupRepository.KickUser(System.Guid,System.Guid)">
+            <summary>
+            Удаляет юзера из группы
+            </summary>
+            <param name="groupId">Группа, из которой удаляют</param>
+            <param name="removeeId">Guid юзера, которого удаляют</param>
+        </member>
+        <member name="T:Chat.Repositories.Abstracts.IMessageRepository">
+            <summary>
+            Интерфейс предназначен для работы с сообщениями
+            </summary>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IMessageRepository.SaveMessage(System.Guid,System.Guid,System.String,System.DateTime)">
+            <summary>
+            Сохраняет сообщение
+            </summary>
+            <param name="senderId">Guid отправителя</param>
+            <param name="receiverId">Guid получателя</param>
+            <param name="content">Текстовое содержимое</param>
+            <param name="time">Время отправки</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IMessageRepository.GetMessagePreviewsForUser(System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Возвращает превью сообщений для пользователя
+            </summary>
+            <param name="userId">Guid пользователя</param>
+            <param name="offset">Сдвиг от последнего сообщения</param>
+            <param name="limit">Кол-во возвращаемых значений</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IMessageRepository.GetTextMessageFromInterlocutor(System.Guid,System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Возвращает сообщение из чата с собеседником
+            </summary>
+            <param name="interlocutorId">GUID юзера-собеседника</param>
+            <param name="userId">Guid пользователя, который запрашивает историю</param>
+            <param name="offset">Сдвиг от последнего сообщения</param>
+            <param name="limit">Кол-во возвращаемых сообщений за раз</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IMessageRepository.GetTextMessageFromGroup(System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Возвращает сообщение из группового чата
+            </summary>
+            <param name="groupId">GUID группы</param>
+            <param name="offset">Сдвиг от последнего сообщения</param>
+            <param name="limit">Кол-во возвращаемых сообщений за раз</param>
+        </member>
+        <member name="T:Chat.Repositories.Abstracts.IUserRepository">
+            <summary>
+            Интерфейс предназначен для работы с юзерами
+            </summary>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IUserRepository.GetPasswordInfo(System.Guid)">
+            <summary>
+            Получение логина и пароля
+            </summary>
+            <param name="userId">Guid пользователя</param>
+            <returns>Кортеж (хэш пароля, соль)</returns>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IUserRepository.GetById(System.Guid)">
+            <summary>
+            Получает юзера по Id
+            </summary>
+            <param name="userId">Guid юзера</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IUserRepository.GetUsersInGroup(System.Guid)">
+            <summary>
+            Получает список юзеров в группе
+            </summary>
+            <param name="groupId">Guid группы</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IUserRepository.GetByLogin(System.String)">
+            <summary>
+            Получает юзера по логину
+            </summary>
+            <param name="login">Логин юзера</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IUserRepository.GetDialogsForUser(System.Guid)">
+            <summary>
+            Получает список диалогов
+            </summary>
+            <param name="userId">Guid юзера</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IUserRepository.Add(System.Guid,System.String,System.String,System.String)">
+            <summary>
+            Добавляет юзера
+            </summary>
+            <param name="userId">Новосгенерированный guid для юзера</param>
+            <param name="login">Логин</param>
+            <param name="hashPswd">Сгенерированный хэш пароля</param>
+            <param name="hashSalt">Соль</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IUserRepository.BindToChat(System.Guid,System.Guid)">
+            <summary>
+            Связывает юзера с чатом
+            </summary>
+            <param name="bindeeId">Guid юзера, которого связывают</param>
+            <param name="chatId">Guid группы или собеседника, с которыми связывают</param>
+        </member>
+        <member name="M:Chat.Repositories.Abstracts.IUserRepository.DoesUserBelongToChat(System.Guid,System.Guid)">
+            <summary>
+            Проверяет, доступен ли чат юзеру
+            </summary>
+            <param name="chatId">Guid чата</param>
+            <param name="userId">Guid зера</param>
+        </member>
+        <member name="T:Chat.Repositories.Implementations.GroupRepository">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IGroupRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.GroupRepository.#ctor(Chat.DbUtils.DbRequest)">
+            <summary>
+            .ctor
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.GroupRepository.GetById(System.Guid)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IGroupRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.GroupRepository.GetGroupsForUser(System.Guid)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IGroupRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.GroupRepository.Add(System.Guid,System.String)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IGroupRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.GroupRepository.KickUser(System.Guid,System.Guid)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IGroupRepository"/>
+        </member>
+        <member name="T:Chat.Repositories.Implementations.MessageRepository">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IMessageRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.MessageRepository.#ctor(Chat.DbUtils.DbRequest)">
+            <summary>
+            .ctor
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.MessageRepository.SaveMessage(System.Guid,System.Guid,System.String,System.DateTime)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IMessageRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.MessageRepository.GetTextMessageFromInterlocutor(System.Guid,System.Guid,System.Int32,System.Int32)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IMessageRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.MessageRepository.GetTextMessageFromGroup(System.Guid,System.Int32,System.Int32)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IMessageRepository"/>
+        </member>
+        <member name="T:Chat.Repositories.Implementations.UserRepository">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IUserRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.#ctor(Chat.DbUtils.DbRequest)">
+            <summary>
+            .ctor
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.GetPasswordInfo(System.Guid)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IUserRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.GetUsersInGroup(System.Guid)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IUserRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.GetById(System.Guid)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IUserRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.GetByLogin(System.String)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IUserRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.GetDialogsForUser(System.Guid)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IUserRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.Add(System.Guid,System.String,System.String,System.String)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IUserRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.BindToChat(System.Guid,System.Guid)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IUserRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.DoesUserBelongToChat(System.Guid,System.Guid)">
+            <inheritdoc cref="T:Chat.Repositories.Abstracts.IUserRepository"/>
+        </member>
+        <member name="M:Chat.Repositories.Implementations.UserRepository.FromReader(System.Data.IDataReader)">
+            <summary>
+            Создает объект по записи
+            </summary>
+            <param name="dataReader">reader результирующей строки</param>
+        </member>
+        <member name="T:Chat.Services.Abstracts.IGroupService">
+            <summary>
+            Сервис групповой беседы
+            </summary>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IGroupService.GetById(System.Guid)">
+            <summary>
+            Возвращает объект группы
+            </summary>
+            <param name="groupId">Guid группы</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IGroupService.GetGroupsForUser(System.Guid)">
+            <summary>
+            Возвращает список групп, в которых учавствует пользователь
+            </summary>
+            <param name="userId">Guid пользователя</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IGroupService.Add(System.String)">
+            <summary>
+            Создает группу
+            </summary>
+            <param name="name">Название группы</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IGroupService.KickUser(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Исключает пользователя из группы
+            </summary>
+            <param name="groupId">Guid группы</param>
+            <param name="removeeId">Guid удаляемого</param>
+            <param name="removerId">Guid удаляющего</param>
+        </member>
+        <member name="T:Chat.Services.Abstracts.IMessageService">
+            <summary>
+            Сервис сообщений
+            </summary>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IMessageService.SaveTextMessage(System.Guid,System.Guid,System.String)">
+            <summary>
+            Сохраняет текстовое сообщение
+            </summary>
+            <param name="senderId">Guid отправителя</param>
+            <param name="receiverId">Guid получателя</param>
+            <param name="content">Содержание текстового сообщения</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IMessageService.GetMessagePreviewsForUser(System.Guid,System.Int32,System.Int32)">
+            <summary>
+             Возвращает превью для чатов
+            </summary>
+            <param name="userId">Guid пользователя</param>
+            <param name="offset">Сдвиг от последнего превью</param>
+            <param name="limit">Кол-во сообщений</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IMessageService.GetTextMessageFromChat(System.Guid,System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Возвращает историю сообщений с чатом
+            </summary>
+            <param name="chatId">Guid обеседника или групповой беседы</param>
+            <param name="userId">Guid пользователя, для которого загружается история</param>
+            <param name="offset">Сдвиг от последнего сообщения</param>
+            <param name="limit">Верхняя граница кол-ва возвращаемых записей</param>
+        </member>
+        <member name="T:Chat.Services.Abstracts.IUserService">
+            <summary>
+            Сервис пользователя
+            </summary>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IUserService.GetById(System.Guid)">
+            <summary>
+            Возвращает объект пользователя по Id
+            </summary>
+            <param name="userId">Guid пользователя</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IUserService.GetByLogin(System.String)">
+            <summary>
+            Возвращает объект пользователя по логину
+            </summary>
+            <param name="login">Логин пользователя</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IUserService.GetUsersInGroup(System.Guid,System.Guid)">
+            <summary>
+            Возвращает участников беседы
+            </summary>
+            <param name="groupId">Guid группы</param>
+            <param name="userId">Guid пользователя, который запрашивает информацию</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IUserService.GetDialogsForUser(System.Guid)">
+            <summary>
+            Возвращает список существующих личных бесед 
+            </summary>
+            <param name="userId">Guid пользователя</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IUserService.BindToChat(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Связывает пользователя с группой
+            </summary>
+            <param name="bindeeId">Пользователь, которого добавляют</param>
+            <param name="adderId">Пользователь, который добавляет в группу</param>
+            <param name="chatId">Групповая беседа</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IUserService.StartConvoWithUser(System.Guid,System.Guid)">
+            <summary>
+            Создает личную беседу с пользователем
+            </summary>
+            <param name="initiatorId">Инициатор беседы</param>
+            <param name="interlocutorId">Собеседник</param>
+        </member>
+        <member name="T:Chat.Services.Implementations.BaseService">
+            <summary>
+            Базовый класс сервисов
+            </summary>
+        </member>
+        <member name="M:Chat.Services.Implementations.BaseService.ExecuteWithCatchGeneric``1(System.Func{Chat.Services.ServiceResponse{``0}})">
+            <summary>
+            Выполняет функцию, обворачивая ее в try-catch
+            </summary>
+            <param name="function">Функция</param>
+        </member>
+        <member name="M:Chat.Services.Implementations.BaseService.ExecuteWithCatch(System.Func{Chat.Services.ServiceResponse})">
+            <summary>
+            Выполняет функцию, обворачивая ее в try-catch
+            </summary>
+            <param name="function">Функция</param>
+        </member>
+        <member name="T:Chat.Services.Implementations.GroupService">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IGroupService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.GroupService.#ctor(Chat.Repositories.Abstracts.IGroupRepository,Chat.Repositories.Abstracts.IUserRepository,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            .ctor
+            </summary>
+        </member>
+        <member name="M:Chat.Services.Implementations.GroupService.GetById(System.Guid)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IGroupService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.GroupService.GetGroupsForUser(System.Guid)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IGroupService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.GroupService.Add(System.String)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IGroupService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.GroupService.KickUser(System.Guid,System.Guid,System.Guid)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IGroupService"/>
+        </member>
+        <member name="T:Chat.Services.Implementations.MessageService">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IMessageService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.MessageService.#ctor(Chat.Repositories.Abstracts.IMessageRepository,Chat.Repositories.Abstracts.IUserRepository,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            .ctor
+            </summary>
+        </member>
+        <member name="M:Chat.Services.Implementations.MessageService.SaveTextMessage(System.Guid,System.Guid,System.String)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IMessageService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.MessageService.GetMessagePreviewsForUser(System.Guid,System.Int32,System.Int32)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IMessageService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.MessageService.GetTextMessageFromChat(System.Guid,System.Guid,System.Int32,System.Int32)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IMessageService"/>
+        </member>
+        <member name="T:Chat.Services.Implementations.UserService">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.UserService.#ctor(Chat.Repositories.Abstracts.IUserRepository,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            .ctor
+            </summary>
+        </member>
+        <member name="M:Chat.Services.Implementations.UserService.GetById(System.Guid)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.UserService.GetByLogin(System.String)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.UserService.GetUsersInGroup(System.Guid,System.Guid)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.UserService.GetDialogsForUser(System.Guid)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.UserService.BindToChat(System.Guid,System.Guid,System.Guid)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.UserService.StartConvoWithUser(System.Guid,System.Guid)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
+        </member>
+        <member name="T:Chat.Services.ServiceResponse">
+            <summary>
+            Используется как возвращаемое значение для методов сервисов
+            </summary>
+        </member>
+        <member name="P:Chat.Services.ServiceResponse.ResultType">
+            <summary>
+            Состояние возвращаемого значение
+            </summary>
+        </member>
+        <member name="P:Chat.Services.ServiceResponse.ErrorMessage">
+            <summary>
+            Сообщение об ошибке. Если сервис отработал с ошибками, содержит сообщение об ошибке
+            </summary>
+        </member>
+        <member name="M:Chat.Services.ServiceResponse.Ok">
+            <summary>
+            Вызывается при успешном возврате
+            </summary>
+        </member>
+        <member name="M:Chat.Services.ServiceResponse.Fail(System.Exception)">
+            <summary>
+            Вызывается при ошибках
+            </summary>
+            <param name="ex">Экземпляр исключения</param>
+        </member>
+        <member name="M:Chat.Services.ServiceResponse.Warning(System.String)">
+            <summary>
+            Вызывается при пользовательских ошибках
+            </summary>
+            <param name="message">Сообщение ошибки</param>
+        </member>
+        <member name="T:Chat.Services.ServiceResponse`1">
+            <inheritdoc/>
+        </member>
+        <member name="P:Chat.Services.ServiceResponse`1.Value">
+            <summary>
+            Хранит возвращаемое значение при успешной отработке сервиса, иначе default
+            </summary>
+        </member>
+        <member name="M:Chat.Services.ServiceResponse`1.Ok(`0)">
+            <summary>
+            Вызывается при успешном возврате
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.Services.ServiceResponse`1.Fail(System.Exception)">
+            <summary>
+            Вызывается при исключениях
+            </summary>
+            <param name="ex">Экземпляр исключения</param>
+        </member>
+        <member name="M:Chat.Services.ServiceResponse`1.Warning(System.String)">
+            <summary>
+            Вызывается при пользовательских ошибках
+            </summary>
+            <param name="message">Сообщение ошибки</param>
+        </member>
+        <member name="T:Chat.Utils.Extensions.GuidExtension">
+            <summary>
+            Расширяет к
+            </summary>
+        </member>
+        <member name="M:Chat.Utils.Extensions.GuidExtension.IsEmpty(System.Guid)">
+            <summary>
+            Проверяет корректность guid
+            </summary>
+            <returns>true при найденных корректных данных, иначе false</returns>
+        </member>
+    </members>
+</doc>

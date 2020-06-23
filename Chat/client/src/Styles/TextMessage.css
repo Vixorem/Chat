@@ -1,0 +1,46 @@
+﻿.dialogTextMessage {
+    width: 60%;
+    display: grid;
+    height: fit-content;
+    min-height: 50px;
+    position: relative;
+    border: rgb(201, 201, 201) solid 1px;
+    margin-bottom: 1%;
+    border-radius: 10px;
+    margin-top: 1%;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 2fr 1fr;
+    grid-template-areas:
+         "dialogTextContent dialogTextContent"
+         "textMessageTime textMessageTime";
+}
+
+.groupTextMessage {
+    /*    TODO*/
+}
+
+.dialogTextContent {
+    padding: 5px;
+    grid-area: dialogTextContent;
+    overflow-wrap: break-word;
+}
+
+.textMessageTime {
+    position: absolute;
+    padding: 3px;
+    right: 0;
+    bottom: 0;
+    grid-area: textMessageTime;
+    color: #898792;
+    text-align: right;
+}
+
+.clientTextMessage {
+    justify-self: right;
+    background: rgba(222, 255, 221, 0.56);
+}
+
+.someonesTextMessage {
+    justify-self: left;
+    background: rgba(229, 247, 255, 0.52);
+}

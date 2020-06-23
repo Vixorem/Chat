@@ -1,0 +1,14 @@
+.messagesTitle {
+    display: grid;
+    text-align: center;
+    font-size: 120%;
+    font-weight:bold;
+    margin: 2%;
+    white-space: nowrap;
+}
+
+.chatList {
+    background: #f6f6f6;
+    grid-area: chatList;
+    overflow-y: scroll;
+}

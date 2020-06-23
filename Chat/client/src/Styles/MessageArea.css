@@ -1,0 +1,7 @@
+.messageArea {
+    display: grid;
+    margin: 2%;
+    overflow-y: scroll;
+    height: complex;
+    background: #f6f6f6;
+}
