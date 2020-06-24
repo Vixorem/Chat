@@ -6,50 +6,43 @@ import ChatListItem from "./ChatListItem";
 import {ServiceResponseGeneric} from "../ServiceResponses/ServiceResponseGeneric"
 import {MessagePreviewDto} from "../DtoModels/MessagePreviewDto";
 import {getTime} from "../Utils/DateHelper";
-import {host} from "../Constants/ServerInfo";
+import {clientId, host} from "../Constants/ServerInfo";
+import {MessageDto} from "../DtoModels/MessageDto";
+import {QueryRepository} from "../Repositories/QueryRepository";
 
-interface IProp {
-    handleClick: (chatId: string) => void
-}
-
-const ChatList: React.FC<IProp> = (props) => {
+const ChatList: React.FC = () => {
     const [error, setError] = useState(null);
     const [isLoaded, setLoaded] = useState(false);
-    const [response, setState] = useState<ServiceResponseGeneric<MessagePreviewDto[]>>();
+    const [response, setResponse] = useState<ServiceResponseGeneric<MessagePreviewDto[]>>();
 
     useEffect(() => {
-        fetch(`${host}/getmessagepreviewsforuser?userId=d2fd7b4c-4fa9-44ae-97e5-b968700f64bd&offset=0`)
-            .then(result => result.json() as Promise<ServiceResponseGeneric<MessagePreviewDto[]>>)
-            .then(
-                (result) => {
-                    setState(result)
-                    setLoaded(true)
-                },
-                (error) => {
-                    setError(error)
-                }
-            )
+        const response = QueryRepository.getFromServer<ServiceResponseGeneric<MessagePreviewDto[]>>(host, "getmessagepreviewsforuser",
+            {name: "userId", value: clientId},
+            {name: "offset", value: "0"},
+            {name: "limit", value: "100"})
+
+        response.then(result => {
+            console.log(result)
+            setResponse(result)
+            setLoaded(true)
+        }).catch((error) => {
+            console.log(error)
+            setLoaded(false)
+            setError(error)
+        })
     }, [])
 
-    if (error) {
-        console.log(error)
-        return <div>Ошибка</div>
-    } else if (!isLoaded) {
-        return <div>Загрузка</div>
-    } else {
-        if (response?.resultType === "2") {
-            return <div>Ошибка сервера</div>
-        }
-        if (response?.resultType === "1") {
-            return <div>{response.errorMessage}</div>
-        }
+    //TODO: проверки на ошибки
+
+    if (!isLoaded) {
+        return <div>Загрузка...</div>
+    } else
         return (
             <div className="chatList">
                 <div className="messagesTitle">Последние сообщения</div>
                 {
                     response?.value!.map(item =>
                         <ChatListItem
-                            chatLoader={props.handleClick}
                             chatId={item.chatId}
                             chatName={item.chatName}
                             messagePreview={item.lastMessage}
@@ -57,7 +50,6 @@ const ChatList: React.FC<IProp> = (props) => {
                 }
             </div>
         );
-    }
 }
 
 export default ChatList

@@ -153,20 +153,22 @@
             .ctor
             </summary>
         </member>
-        <member name="M:Chat.Controllers.MessageController.GetChatHistory(System.Guid,System.Guid,System.Int32)">
+        <member name="M:Chat.Controllers.MessageController.GetChatHistory(System.Guid,System.Guid,System.Int32,System.Int32)">
             <summary>
             Возвращает историю сообщений для линчной или групповой беседы
             </summary>
             <param name="chatId">Guid группы или беседы, из которых загружается история</param>
             <param name="userId">Guid пользователя, для которого загружается история</param>
             <param name="offset">Сдвиг от последнего сообщения в чате</param>
+            <param name="limit">Кол-во возвращенных записей</param>
         </member>
-        <member name="M:Chat.Controllers.MessageController.GetMessagePreviewsForUser(System.Guid,System.Int32)">
+        <member name="M:Chat.Controllers.MessageController.GetMessagePreviewsForUser(System.Guid,System.Int32,System.Int32)">
             <summary>
             Возвращает превью сообщений чата
             </summary>
             <param name="userId">Guid пользователя</param>
             <param name="offset">Сдвиг от последнего превью</param>
+            <param name="limit">Кол-во возвращенных записей</param>
         </member>
         <member name="M:Chat.Controllers.MessageController.SendTextMessage(System.Guid,System.Guid,System.String)">
             <summary>

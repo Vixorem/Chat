@@ -1,7 +1,6 @@
 .app {
     margin: 0 auto;
     width: 50%;
-    /*TODO: 100vh это временно*/
     height: 100vh;
     display: grid;
     grid-template-columns: 1fr 2fr;
