@@ -322,6 +322,16 @@
         <member name="M:Chat.DbUtils.DbTypeConverter.GetDateTime(System.Data.IDataReader,System.String)">
             <inheritdoc cref="M:Chat.DbUtils.DbTypeConverter.GetGuid(System.Data.IDataReader,System.String)"/>
         </member>
+        <member name="T:Chat.Hubs.ChatHub">
+            <summary>
+            Хаб
+            </summary>
+        </member>
+        <member name="M:Chat.Hubs.ChatHub.#ctor(Microsoft.Extensions.Logging.ILogger{Chat.Hubs.ChatHub})">
+            <summary>
+            .ctor
+            </summary>
+        </member>
         <member name="T:Chat.Models.BaseReceiver">
             <summary>
             Класс, который должны реализовывать получатели сообщений

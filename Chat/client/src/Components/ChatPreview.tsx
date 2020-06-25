@@ -1,10 +1,10 @@
 ﻿import React, {useContext} from 'react';
 import '../Styles/ChatListItem.css';
-import ChatItemClickEventContext from "../Contexts/ChatItemClickEventContext";
 import {ServiceResponseGeneric} from "../ServiceResponses/ServiceResponseGeneric";
 import {MessageDto} from "../DtoModels/MessageDto";
 import {clientId, host} from "../Constants/ServerInfo";
 import {QueryRepository} from "../Repositories/QueryRepository";
+import ChatContext from "../Contexts/ChatContext";
 
 interface IProp {
     chatId: string,
@@ -13,8 +13,8 @@ interface IProp {
     sentTime: string
 }
 
-const ChatListItem: React.FC<IProp> = (props) => {
-    const context = useContext(ChatItemClickEventContext)
+const ChatPreview: React.FC<IProp> = (props) => {
+    const context = useContext(ChatContext)
 
     function chatListItemClickHandler(chatId: string) {
         const response = QueryRepository.getFromServer<ServiceResponseGeneric<MessageDto[]>>(host, "getchathistory",
@@ -23,7 +23,7 @@ const ChatListItem: React.FC<IProp> = (props) => {
             {name: "offset", value: "0"},
             {name: "limit", value: "100"})
         response.then(response => {
-            context.setChatMessages(response.value);
+            context.setMessages(response.value);
             context.setOpenedChatId(chatId)
         })
     }
@@ -40,4 +40,4 @@ const ChatListItem: React.FC<IProp> = (props) => {
     );
 }
 
-export default ChatListItem
+export default ChatPreview

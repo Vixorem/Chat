@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Chat.Controllers;
 using Chat.DbUtils;
+using Chat.Hubs;
 using Chat.Options;
 using Chat.Repositories.Abstracts;
 using Chat.Repositories.Implementations;
@@ -57,11 +58,19 @@ namespace Chat
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .WithOrigins("http://localhost:3000");
+                });
+            });
+
+            services.AddSignalR(hubOptions =>
+            {
+                hubOptions.EnableDetailedErrors = true;
+                hubOptions.KeepAliveInterval = System.TimeSpan.FromMinutes(1);
             });
         }
 
@@ -91,11 +100,15 @@ namespace Chat
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+
             app.UseCors();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chat");
+            });
         }
     }
 }

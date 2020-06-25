@@ -4,7 +4,6 @@ import '../Styles/ChatHeader.css'
 
 const ChatHeader: React.FC = () => {
     return (
-        //key-backspace
         <div className="chatHeader">
         </div>
     );
