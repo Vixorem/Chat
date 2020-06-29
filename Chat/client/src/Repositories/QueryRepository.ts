@@ -5,8 +5,8 @@ export class QueryRepository {
         let url: string = `${host}/${controller}/?`
         params.forEach(param => url += `${param.name}=${param.value}&`)
         const response = await fetch(url)
-
-        return await response.json() as T;
+        let a = await response.json()
+        return a as T;
     }
 
     static async postToServer<T>(host: string, controller: string, body: string): Promise<T> {
@@ -15,7 +15,7 @@ export class QueryRepository {
             method: "POST",
             body: body
         })
-        
+
         return await response.json() as T
     }
 }

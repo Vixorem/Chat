@@ -1,4 +1,4 @@
-﻿.chatListItem {
+﻿.chatPreview {
     display: grid;
     margin: 1%;
     height: complex;
@@ -10,7 +10,7 @@
          "message message";
 }
 
-.chatListItem:hover {
+.chatPreview:hover {
     background: rgba(79, 156, 243, 0.4);
 }
 

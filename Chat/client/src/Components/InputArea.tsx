@@ -1,32 +1,30 @@
-﻿import React, {useContext, useState} from 'react';
+﻿import React, {useContext, useEffect, useRef} from 'react';
 import '../Styles/InputArea.css'
-import {QueryRepository} from "../Repositories/QueryRepository";
-import {ServiceResponse} from "../ServiceResponses/ServiceResponse";
-import {clientId, host} from "../Constants/ServerInfo";
-import ChatContext from "../Contexts/ChatContext";
-import InputContext from "../Contexts/InputContext";
+import {InputContext} from "../Contexts/InputContext";
+import {ChatContext} from "../Contexts/ChatContext";
+import {HubContext} from "../Contexts/HubContext";
+import {MessageDto, Status} from "../DtoModels/MessageDto";
+import {client} from "../Constants/ServerInfo";
 
 const InputArea: React.FC = () => {
-    const [textContent, setTextContent] = useState<string>("")
-    const [response, setResponse] = useState<ServiceResponse>()
+    const inputRef = useRef<HTMLTextAreaElement>(null)
     const chatContext = useContext(ChatContext)
     const inputContext = useContext(InputContext)
 
+    useEffect(() => {
+        inputRef.current?.focus()
+    }, [chatContext.openedChatId])
 
     if (chatContext.openedChatId === "")
         return <div/>
     else
         return (
             <div className="writingArea">
-            <textarea placeholder="Введите сообщение" className="textArea"
-                      onChange={(e: React.ChangeEvent) => inputContext.setContent(e.target.textContent ?? "")}/>
+                <textarea ref={inputRef} placeholder="Введите сообщение" className="textArea" id="HELLO"
+                          onKeyDown={(e) => inputContext.enterKeyHandler(e, inputRef)}/>
                 <button className="sendButton"
-                        onClick={
-                            (e: React.MouseEvent) => {
-                                if (textContent !== "")
-                                    inputContext.setReceiverId(chatContext.openedChatId)
-                                inputContext.eventHandler()
-                            }}/>
+                        onClick={(e) => inputContext.sendHandler(inputRef)}
+                />
             </div>
         );
 }

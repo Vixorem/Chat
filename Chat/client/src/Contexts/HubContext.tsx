@@ -1,42 +1,76 @@
 ﻿import React, {useEffect, useState} from 'react'
-import {HubConnection, HubConnectionBuilder} from '@microsoft/signalr';
-import {host} from "../Constants/ServerInfo";
+import {HubConnection, HubConnectionBuilder, HubConnectionState} from '@microsoft/signalr';
 
 interface IHubContext {
-    connection: HubConnection | undefined
-    setConnection: React.Dispatch<React.SetStateAction<HubConnection | undefined>>
+    unsubscribe: (name: string) => void
+    subscribe: (name: string, callback: (data: string) => void) => void
+    send: (name: string, data: string) => Promise<boolean>
+    isConnected: boolean
 }
 
 export const HubContext = React.createContext<IHubContext>({
-    connection: undefined,
-    setConnection: value => {
+    subscribe: name => {
         throw Error("Не проинициализирован контекст хаба")
-    }
+    },
+    unsubscribe: name => {
+        throw Error("Не проинициализирован контекст хаба")
+    },
+    send: name => {
+        throw Error("Не проинициализирован контекст хаба")
+    },
+    isConnected: false
 })
 
 export const HubContextProvider: React.FC = ({children}) => {
-    const [connection, setConnection] = useState<HubConnection | undefined>()
+    const [connection, setConnection] = useState<HubConnection>(new HubConnectionBuilder()
+        .withUrl("https://localhost:5001/chat")
+        .build())
+    const [isConnected, setConnected] = useState<boolean>(false)
+
+    const subscribe = (name: string, callback: (data: string) => void) => {
+        if (connection != null && isConnected)
+            connection.on(name, callback)
+    }
+
+    const unsubscribe = (name: string) => {
+        if (connection != null && isConnected)
+            connection.off(name)
+    }
+
+    const send = async (name: string, data: string): Promise<boolean> => {
+        try {
+            if (connection != null && isConnected) {
+                await connection.invoke(name, data)
+                return true
+            }
+            return false
+        } catch (e) {
+            return false
+        }
+    }
 
     useEffect(() => {
         const initialize = async () => {
-            const hubConnection = new HubConnectionBuilder()
-                .withUrl("/chat")
-                .build()
-            hubConnection.baseUrl = host + "/chat"
             try {
-                //await hubConnection.start()
-                setConnection(hubConnection)
+                await connection.start()
+                setConnected(connection.state === HubConnectionState.Connected)
             } catch (e) {
                 throw e
             }
         }
 
         initialize()
-    })
+    }, [])
 
-    return <HubContext.Provider value={{connection, setConnection}}>
+    return <HubContext.Provider
+        value={{
+            subscribe,
+            unsubscribe,
+            send,
+            isConnected: connection.state === HubConnectionState.Connected
+        }}>
         {children}
     </HubContext.Provider>
 }
 
-export default HubContext
+export default HubContextProvider

@@ -20,18 +20,18 @@ namespace Chat.ClientModels
         public int Id { get; set; }
 
         /// <summary>
-        /// Тип сообщения
-        /// </summary>
-        [DataMember]
-        [JsonProperty("MessageType")]
-        public MessageType MessageType { get; set; }
-
-        /// <summary>
         /// Текстовое содержимое сообщения
         /// </summary>
         [DataMember]
         [JsonProperty("Content")]
         public string Content { get; set; }
+        
+        /// <summary>
+        /// Статус сообщения
+        /// </summary>
+        [DataMember]
+        [JsonProperty("Status")]
+        public Status Status { get; set; }
 
         /// <summary>
         /// Отправитель сообщения
@@ -46,6 +46,11 @@ namespace Chat.ClientModels
         [DataMember]
         [JsonProperty("ReceiverId")]
         public Guid ReceiverId { get; set; }
+        
+        /// <summary>
+        /// Идентификатор, сформированный на стороне клиента
+        /// </summary>
+        public string ClientMessageId { get; set; } = "";
 
         /// <summary>
         /// Время отправки
@@ -63,11 +68,11 @@ namespace Chat.ClientModels
             return new MessageDto
             {
                 Id = textMessage.Id,
-
                 Content = textMessage.Content,
                 ReceiverId = textMessage.ReceiverId,
                 Sender = UserDto.ConvertFromDomain(textMessage.Sender),
-                SentTime = textMessage.SentTime
+                SentTime = textMessage.SentTime,
+                Status = Status.Received
             };
         }
     }

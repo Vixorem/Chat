@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Chat.ClientModels;
 using Chat.DbUtils;
 using Chat.Models;
 using Chat.Repositories.Abstracts;
@@ -21,10 +22,11 @@ namespace Chat.Repositories.Implementations
         }
 
         ///<inheritdoc cref="IMessageRepository"/>
-        public void SaveMessage(Guid senderId, Guid receiverId, string content, DateTime time)
+        public int SaveMessage(Guid senderId, Guid receiverId, string content, DateTime time)
         {
-            _db.ExecuteNonQuery(
+            return _db.GetItemFromEntry(
                 "ChatCreateMsg",
+                dataReader => dataReader.GetInt("Id"),
                 new DbParam("@Content", content),
                 new DbParam("@ReceiverId", receiverId),
                 new DbParam("@SenderId", senderId),

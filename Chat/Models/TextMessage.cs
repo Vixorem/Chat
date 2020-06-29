@@ -12,7 +12,7 @@ namespace Chat.Models
         /// Id сообщения
         /// </summary>
         public int Id { get; set; }
-        
+
         /// <summary>
         /// Guid получателя
         /// </summary>

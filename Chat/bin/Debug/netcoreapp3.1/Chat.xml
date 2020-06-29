@@ -35,14 +35,14 @@
             Идентификатор сообщения
             </summary>
         </member>
-        <member name="P:Chat.ClientModels.MessageDto.MessageType">
-            <summary>
-            Тип сообщения
-            </summary>
-        </member>
         <member name="P:Chat.ClientModels.MessageDto.Content">
             <summary>
             Текстовое содержимое сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessageDto.Status">
+            <summary>
+            Статус сообщения
             </summary>
         </member>
         <member name="P:Chat.ClientModels.MessageDto.Sender">
@@ -53,6 +53,11 @@
         <member name="P:Chat.ClientModels.MessageDto.ReceiverId">
             <summary>
             Получатель сообщения
+            </summary>
+        </member>
+        <member name="P:Chat.ClientModels.MessageDto.ClientMessageId">
+            <summary>
+            Идентификатор, сформированный на стороне клиента
             </summary>
         </member>
         <member name="P:Chat.ClientModels.MessageDto.SentTime">
@@ -97,9 +102,19 @@
             </summary>
             <param name="preview">Экземпляр модели бизнес-логики</param>
         </member>
-        <member name="T:Chat.ClientModels.MessageType">
+        <member name="T:Chat.ClientModels.Status">
             <summary>
-            Типы сообщений
+            Статус сообщения
+            </summary>
+        </member>
+        <member name="F:Chat.ClientModels.Status.Sent">
+            <summary>
+            Если сообщение отправлено с клиента и еще не пришло на сервер
+            </summary>
+        </member>
+        <member name="F:Chat.ClientModels.Status.Received">
+            <summary>
+            Если сообщение дошло до сервера
             </summary>
         </member>
         <member name="T:Chat.ClientModels.UserDto">
@@ -327,10 +342,16 @@
             Хаб
             </summary>
         </member>
-        <member name="M:Chat.Hubs.ChatHub.#ctor(Microsoft.Extensions.Logging.ILogger{Chat.Hubs.ChatHub})">
+        <member name="M:Chat.Hubs.ChatHub.#ctor(Microsoft.Extensions.Logging.ILogger{Chat.Hubs.ChatHub},Chat.Repositories.Abstracts.IUserRepository,Chat.Repositories.Abstracts.IMessageRepository,Chat.Repositories.Abstracts.IGroupRepository)">
             <summary>
             .ctor
             </summary>
+        </member>
+        <member name="M:Chat.Hubs.ChatHub.SendMessage(System.String)">
+            <summary>
+            Сохраняет и переотправляет полученное сообщение
+            </summary>
+            <param name="message">Сообщение</param>
         </member>
         <member name="T:Chat.Models.BaseReceiver">
             <summary>
@@ -473,6 +494,7 @@
             <param name="receiverId">Guid получателя</param>
             <param name="content">Текстовое содержимое</param>
             <param name="time">Время отправки</param>
+            <returns>Id сохраненного сообщения</returns>
         </member>
         <member name="M:Chat.Repositories.Abstracts.IMessageRepository.GetMessagePreviewsForUser(System.Guid,System.Int32,System.Int32)">
             <summary>

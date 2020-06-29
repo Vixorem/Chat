@@ -16,7 +16,8 @@ namespace Chat.Repositories.Abstracts
         /// <param name="receiverId">Guid получателя</param>
         /// <param name="content">Текстовое содержимое</param>
         /// <param name="time">Время отправки</param>
-        void SaveMessage(Guid senderId, Guid receiverId, string content, DateTime time);
+        /// <returns>Id сохраненного сообщения</returns>
+        int SaveMessage(Guid senderId, Guid receiverId, string content, DateTime time);
 
         /// <summary>
         /// Возвращает превью сообщений для пользователя
