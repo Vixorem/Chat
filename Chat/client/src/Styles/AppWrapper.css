@@ -1,4 +1,4 @@
-.app {
+﻿.app {
     margin: 0 auto;
     width: 50%;
     height: 100vh;
@@ -9,5 +9,10 @@
         "userNavbar chatHeader"
         "chatList messageArea"
         "chatList inputArea";
+}
+
+.disableApp {
+    pointer-events: none;
+    color: rgba(116, 116, 116, 0.6);
 }
 

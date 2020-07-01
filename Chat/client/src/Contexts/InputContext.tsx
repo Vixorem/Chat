@@ -1,6 +1,4 @@
-﻿import React, {RefObject, useContext, useEffect, useRef, useState} from "react";
-import {QueryRepository} from "../Repositories/QueryRepository";
-import {ServiceResponse} from "../ServiceResponses/ServiceResponse";
+﻿import React, {RefObject, useContext, useRef, useState} from "react";
 import {client, host} from "../Constants/ServerInfo";
 import {MessageDto, Status} from "../DtoModels/MessageDto";
 import {ChatContext} from "./ChatContext";
@@ -26,9 +24,6 @@ export const InputContext = React.createContext<IInputContext>({
 })
 
 const InputContextProvider: React.FC = ({children}) => {
-    const [content, setContent] = useState<string>("")
-    const [receiverId, setReceiverId] = useState<string>("")
-    const inputRef = useRef<HTMLTextAreaElement>(null)
     const inputContext = useContext(InputContext)
     const chatContext = useContext(ChatContext)
     const hubContext = useContext(HubContext)
@@ -41,7 +36,7 @@ const InputContextProvider: React.FC = ({children}) => {
                 chatContext.openedChatId,
                 `${Date.now()}`)
             chatContext.updateChat(message)
-
+            console.log(JSON.stringify(message))
             const res: boolean = await hubContext.send("SendMessage", JSON.stringify(message))
             if (!res) {
                 message.status = Status.Error

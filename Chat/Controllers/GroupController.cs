@@ -4,13 +4,14 @@ using Chat.ClientModels;
 using Chat.Services;
 using Chat.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace Chat.Controllers
 {
     public class GroupController : ControllerBase
     {
         private readonly IGroupService _groupService;
-        
+
         /// <summary>
         /// .ctor
         /// </summary>
@@ -29,7 +30,7 @@ namespace Chat.Controllers
         {
             return _groupService.GetById(groupId);
         }
-        
+
         /// <summary>
         /// Возвращает список групповых бесед
         /// </summary>
@@ -40,18 +41,18 @@ namespace Chat.Controllers
         {
             return _groupService.GetGroupsForUser(userId);
         }
-        
+
         /// <summary>
         /// Удаляет пользователя из группы
         /// </summary>
-        /// <param name="groupId">Guid группы</param>
-        /// <param name="removerId">Guid пользователя, который удаляет</param>
-        /// <param name="removeeId">Guid пользователя, которого удаляют</param>
         [HttpPost]
         [Route("removeuserfromgroup")]
-        public ServiceResponse RemoveUserFromGroup(Guid groupId, Guid removerId, Guid removeeId)
+        public ServiceResponse RemoveUserFromGroup(string guidSet)
         {
-            return _groupService.KickUser(groupId, removeeId, removerId);
+            var guids = JObject.Parse(guidSet);
+            return _groupService.KickUser(Guid.Parse(guids["groupId"].ToString()),
+                Guid.Parse(guids["removeeId"].ToString()),
+                Guid.Parse(guids["removerId"].ToString()));
         }
     }
 }

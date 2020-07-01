@@ -40,16 +40,23 @@ namespace Chat.Services.Abstracts
         /// <summary>
         /// Связывает пользователя с группой
         /// </summary>
-        /// <param name="bindeeId">Пользователь, которого добавляют</param>
+        /// <param name="addeeId">Пользователь, которого добавляют</param>
         /// <param name="adderId">Пользователь, который добавляет в группу</param>
         /// <param name="chatId">Групповая беседа</param>
-        ServiceResponse BindToChat(Guid bindeeId, Guid adderId, Guid chatId);
+        ServiceResponse AddToGroup(Guid addeeId, Guid adderId, Guid chatId);
 
         /// <summary>
-        /// Создает личную беседу с пользователем
+        /// Инициирует новую группу
         /// </summary>
-        /// <param name="initiatorId">Инициатор беседы</param>
-        /// <param name="interlocutorId">Собеседник</param>
-        ServiceResponse StartConvoWithUser(Guid initiatorId, Guid interlocutorId);
+        /// <param name="userId">Инициатор беседы</param>
+        /// <param name="groupId">Группа</param>
+        ServiceResponse BindToChat(Guid userId, Guid groupId);
+
+        /// <summary>
+        /// Создает беседу между двумя пользователями
+        /// </summary>
+        /// <param name="firstUserId">Первый пользователь</param>
+        /// <param name="secondUserId">Второй пользователь</param>
+        ServiceResponse StartDialog(Guid firstUserId, Guid secondUserId);
     }
 }

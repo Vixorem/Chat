@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using Chat.ClientModels;
 using Chat.Models;
@@ -25,8 +25,9 @@ namespace Chat.Services.Abstracts
         /// <summary>
         /// Создает группу
         /// </summary>
-        /// <param name="name">Название группы</param>
-        ServiceResponse Add(string name);
+        /// <param name="groupName">Название группы</param>
+        /// <param name="groupCreatorId">Guid создателя группы</param>
+        ServiceResponse<GroupDto> Add(string groupName, Guid groupCreatorId);
 
         /// <summary>
         /// Исключает пользователя из группы

@@ -2,9 +2,6 @@
 import '../Styles/InputArea.css'
 import {InputContext} from "../Contexts/InputContext";
 import {ChatContext} from "../Contexts/ChatContext";
-import {HubContext} from "../Contexts/HubContext";
-import {MessageDto, Status} from "../DtoModels/MessageDto";
-import {client} from "../Constants/ServerInfo";
 
 const InputArea: React.FC = () => {
     const inputRef = useRef<HTMLTextAreaElement>(null)

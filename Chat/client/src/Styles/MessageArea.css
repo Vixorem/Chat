@@ -1,5 +1,6 @@
 .messageArea {
     display: grid;
+    width: 100%;
     margin: 2%;
     overflow-y: scroll;
     height: complex;

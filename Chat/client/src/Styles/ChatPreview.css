@@ -1,10 +1,9 @@
 ﻿.chatPreview {
     display: grid;
     margin: 1%;
-    height: complex;
     background: rgb(255, 255, 255);
-    grid-template-columns: 80% 20%;
-    grid-template-rows: 30% 70%;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: 1fr 2fr;
     grid-template-areas:
          "chatName time"
          "message message";

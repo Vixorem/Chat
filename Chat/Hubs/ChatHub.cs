@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Chat.ClientModels;
 using Chat.Repositories.Abstracts;
 using Chat.Services;
+using Chat.Services.Abstracts;
+using Chat.Utils.Extensions;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -16,51 +18,47 @@ namespace Chat.Hubs
     public class ChatHub : Hub
     {
         private readonly ILogger<ChatHub> _logger;
-        private readonly IUserRepository _userRepository;
-        private readonly IMessageRepository _messageRepository;
-        private readonly IGroupRepository _groupRepository;
+        private readonly IUserService _userService;
+        private readonly IMessageService _messageService;
+        private readonly IGroupService _groupService;
 
         /// <summary>
         /// .ctor
         /// </summary>
-        public ChatHub(ILogger<ChatHub> logger, IUserRepository userRepository, IMessageRepository messageRepository,
-            IGroupRepository groupRepository)
+        public ChatHub(ILogger<ChatHub> logger, IUserService userService, IMessageService messageService,
+            IGroupService groupService)
         {
             _logger = logger;
-            _userRepository = userRepository;
-            _messageRepository = messageRepository;
-            _groupRepository = groupRepository;
+            _userService = userService;
+            _messageService = messageService;
+            _groupService = groupService;
         }
 
         /// <summary>
-        /// Сохраняет и переотправляет полученное сообщение
+        /// Создание группы
         /// </summary>
-        /// <param name="message">Сообщение</param>
+        /// <param name="data">json строка с данными о новой группе</param>
+        public async Task CreateGroup(string data)
+        {
+            var jsonObject = JObject.Parse(data);
+            var groupCreatorId = Guid.Parse(JObject.Parse(data)["creatorId"].ToString());
+            var dto = jsonObject.ToGroupDto();
+            var response = _groupService.Add(dto.Name, groupCreatorId);
+            await Clients.All.SendAsync("AcceptGroupCreation", response);
+        }
+
+        /// <summary>
+        /// Отправка сообщения
+        /// </summary>
+        /// <param name="message">json строка MessageDto</param>
         public async Task SendMessage(string message)
         {
             var jsonObject = JObject.Parse(message);
-            var senderId = Guid.Parse(jsonObject["sender"]["id"].ToString());
-            var senderLogin = jsonObject["sender"]["id"].ToString();
-            var receiverId = Guid.Parse(jsonObject["receiverId"].ToString());
-            var content = jsonObject["content"].ToString();
-            var clientMesId = jsonObject["clientMessageId"].ToString();
-            var sentTime = DateTime.Now;
-            var id = _messageRepository.SaveMessage(senderId, receiverId, content, sentTime);
-            var messageObj = new MessageDto
-            {
-                Id = id,
-                Content = content,
-                Sender = new UserDto
-                {
-                    Id = senderId,
-                    Login = senderLogin
-                },
-                ReceiverId = receiverId,
-                SentTime = sentTime,
-                Status = Status.Received,
-                ClientMessageId = clientMesId
-            };
-            await Clients.All.SendAsync("ReceiveMessage", ServiceResponse<MessageDto>.Ok(messageObj));
+            var dto = jsonObject.ToMessageDto();
+            var res = _messageService.SaveTextMessage(dto.Sender.Id, dto.ReceiverId, dto.Content);
+            res.Value.ClientMessageId = dto.ClientMessageId;
+            res.Value.Sender = dto.Sender;
+            await Clients.All.SendAsync("ReceiveMessage", res);
         }
     }
 }

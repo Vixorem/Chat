@@ -10,6 +10,6 @@ CREATE PROCEDURE ChatCreateUser @Id UNIQUEIDENTIFIER,
                                 @Salt NVARCHAR(64)
 AS
 BEGIN
-    INSERT INTO ChatUser
+    INSERT INTO ChatUser OUTPUT INSERTED.Id
     VALUES (@Id, @Login, @HashedPswd, @Salt);
 END

@@ -1,7 +1,23 @@
 ﻿.chatHeader {
-    display: flex;
-    justify-content: center;
-    font-size: 150%;
+    display: grid;
     background: #8bc3ff;
     grid-area: chatHeader;
+    grid-template-columns: 4fr 1fr;
+    grid-template-areas: "chatTitle settings";
+}
+
+.settings {
+    grid-area: settings;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatTitle {
+    grid-area: chatTitle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 150%;
 }

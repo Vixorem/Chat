@@ -56,15 +56,15 @@ namespace Chat.Services.Implementations
         }
 
         /// <inheritdoc cref="IGroupService"/>
-        public ServiceResponse Add(string name)
+        public ServiceResponse<GroupDto> Add(string groupName, Guid groupCreatorId)
         {
-            return ExecuteWithCatch(() =>
+            return ExecuteWithCatchGeneric(() =>
             {
-                if (string.IsNullOrWhiteSpace(name))
-                    return ServiceResponse.Warning(LoginIsNotCorrect);
+                if (string.IsNullOrWhiteSpace(groupName))
+                    return ServiceResponse<GroupDto>.Warning(LoginIsNotCorrect);
 
-                _groupRepository.Add(Guid.NewGuid(), name);
-                return ServiceResponse.Ok();
+                var group = _groupRepository.Add(Guid.NewGuid(), groupName);
+                return ServiceResponse<GroupDto>.Ok(GroupDto.ConvertFromDomain(group));
             });
         }
 

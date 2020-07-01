@@ -1,4 +1,4 @@
-﻿import React, {useContext, useEffect} from 'react';
+﻿import React, {useContext} from 'react';
 import '../Styles/ChatPreview.css';
 import {ChatContext} from "../Contexts/ChatContext";
 
@@ -15,7 +15,7 @@ const ChatPreview: React.FC<IProp> = (props) => {
     return (
         <div className="chatPreview" key={props.chatId}
              onClick={(e) => {
-                 context.previewClickHandler(props.chatId)
+                 context.previewClickHandler(props.chatId, props.chatName)
              }}>
             <div className="chatName">{props.chatName}</div>
             <div className="time">{props.sentTime}</div>

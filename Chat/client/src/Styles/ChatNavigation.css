@@ -1,0 +1,53 @@
+﻿.chatNavigation {
+    display: grid;
+    text-align: center;
+    width: 100%;
+    background: #eeefef;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+            "addMemberButton"
+            "memberList";
+}
+
+.addMemberButton {
+    display: flex;
+    align-self: center;
+    text-align: center;
+    justify-self: center;
+    width: 20%;
+    grid-area: addMemberButton;
+}
+
+.memberList {
+    grid-area: memberList;
+    overflow-y: scroll;
+}
+
+.memberItem {
+    margin: 2%;
+    background: #ffffff;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    max-height: 5%;
+    grid-template-areas: "memberLogin kickMemberBtn";
+}
+
+.memberItem:hover {
+    background: #e3fff6;
+}
+
+.memberLogin {
+    grid-area: memberLogin;
+    font-weight: bold;
+}
+
+.kickMemberBtn {
+    display: inline-block;
+    color: #dc3545;
+}
+
+.kickMemberBtn:hover {
+    background: rgb(238, 205, 78);
+    cursor: pointer;
+}
+

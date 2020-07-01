@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Chat.ClientModels;
 using Chat.DbUtils;
 using Chat.Models;
@@ -22,11 +23,11 @@ namespace Chat.Repositories.Implementations
         }
 
         ///<inheritdoc cref="IMessageRepository"/>
-        public int SaveMessage(Guid senderId, Guid receiverId, string content, DateTime time)
+        public (int id, DateTime sentTime) SaveMessage(Guid senderId, Guid receiverId, string content, DateTime time)
         {
             return _db.GetItemFromEntry(
                 "ChatCreateMsg",
-                dataReader => dataReader.GetInt("Id"),
+                dataReader => (dataReader.GetInt("Id"), dataReader.GetDateTime("SentTime")),
                 new DbParam("@Content", content),
                 new DbParam("@ReceiverId", receiverId),
                 new DbParam("@SenderId", senderId),

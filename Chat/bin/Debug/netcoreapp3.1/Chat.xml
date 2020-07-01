@@ -155,13 +155,10 @@
             </summary>
             <param name="userId">Guid пользователя, для которого загружается список</param>
         </member>
-        <member name="M:Chat.Controllers.GroupController.RemoveUserFromGroup(System.Guid,System.Guid,System.Guid)">
+        <member name="M:Chat.Controllers.GroupController.RemoveUserFromGroup(System.String)">
             <summary>
             Удаляет пользователя из группы
             </summary>
-            <param name="groupId">Guid группы</param>
-            <param name="removerId">Guid пользователя, который удаляет</param>
-            <param name="removeeId">Guid пользователя, которого удаляют</param>
         </member>
         <member name="M:Chat.Controllers.MessageController.#ctor(Chat.Services.Abstracts.IMessageService)">
             <summary>
@@ -342,16 +339,22 @@
             Хаб
             </summary>
         </member>
-        <member name="M:Chat.Hubs.ChatHub.#ctor(Microsoft.Extensions.Logging.ILogger{Chat.Hubs.ChatHub},Chat.Repositories.Abstracts.IUserRepository,Chat.Repositories.Abstracts.IMessageRepository,Chat.Repositories.Abstracts.IGroupRepository)">
+        <member name="M:Chat.Hubs.ChatHub.#ctor(Microsoft.Extensions.Logging.ILogger{Chat.Hubs.ChatHub},Chat.Services.Abstracts.IUserService,Chat.Services.Abstracts.IMessageService,Chat.Services.Abstracts.IGroupService)">
             <summary>
             .ctor
             </summary>
         </member>
+        <member name="M:Chat.Hubs.ChatHub.CreateGroup(System.String)">
+            <summary>
+            Создание группы
+            </summary>
+            <param name="data">json строка с данными о новой группе</param>
+        </member>
         <member name="M:Chat.Hubs.ChatHub.SendMessage(System.String)">
             <summary>
-            Сохраняет и переотправляет полученное сообщение
+            Отправка сообщения
             </summary>
-            <param name="message">Сообщение</param>
+            <param name="message">json строка MessageDto</param>
         </member>
         <member name="T:Chat.Models.BaseReceiver">
             <summary>
@@ -676,11 +679,12 @@
             </summary>
             <param name="userId">Guid пользователя</param>
         </member>
-        <member name="M:Chat.Services.Abstracts.IGroupService.Add(System.String)">
+        <member name="M:Chat.Services.Abstracts.IGroupService.Add(System.String,System.Guid)">
             <summary>
             Создает группу
             </summary>
-            <param name="name">Название группы</param>
+            <param name="groupName">Название группы</param>
+            <param name="groupCreatorId">Guid создателя группы</param>
         </member>
         <member name="M:Chat.Services.Abstracts.IGroupService.KickUser(System.Guid,System.Guid,System.Guid)">
             <summary>
@@ -751,20 +755,27 @@
             </summary>
             <param name="userId">Guid пользователя</param>
         </member>
-        <member name="M:Chat.Services.Abstracts.IUserService.BindToChat(System.Guid,System.Guid,System.Guid)">
+        <member name="M:Chat.Services.Abstracts.IUserService.AddToGroup(System.Guid,System.Guid,System.Guid)">
             <summary>
             Связывает пользователя с группой
             </summary>
-            <param name="bindeeId">Пользователь, которого добавляют</param>
+            <param name="addeeId">Пользователь, которого добавляют</param>
             <param name="adderId">Пользователь, который добавляет в группу</param>
             <param name="chatId">Групповая беседа</param>
         </member>
-        <member name="M:Chat.Services.Abstracts.IUserService.StartConvoWithUser(System.Guid,System.Guid)">
+        <member name="M:Chat.Services.Abstracts.IUserService.BindToChat(System.Guid,System.Guid)">
             <summary>
-            Создает личную беседу с пользователем
+            Инициирует новую группу
             </summary>
-            <param name="initiatorId">Инициатор беседы</param>
-            <param name="interlocutorId">Собеседник</param>
+            <param name="userId">Инициатор беседы</param>
+            <param name="groupId">Группа</param>
+        </member>
+        <member name="M:Chat.Services.Abstracts.IUserService.StartDialog(System.Guid,System.Guid)">
+            <summary>
+            Создает беседу между двумя пользователями
+            </summary>
+            <param name="firstUserId">Первый пользователь</param>
+            <param name="secondUserId">Второй пользователь</param>
         </member>
         <member name="T:Chat.Services.Implementations.BaseService">
             <summary>
@@ -797,7 +808,7 @@
         <member name="M:Chat.Services.Implementations.GroupService.GetGroupsForUser(System.Guid)">
             <inheritdoc cref="T:Chat.Services.Abstracts.IGroupService"/>
         </member>
-        <member name="M:Chat.Services.Implementations.GroupService.Add(System.String)">
+        <member name="M:Chat.Services.Implementations.GroupService.Add(System.String,System.Guid)">
             <inheritdoc cref="T:Chat.Services.Abstracts.IGroupService"/>
         </member>
         <member name="M:Chat.Services.Implementations.GroupService.KickUser(System.Guid,System.Guid,System.Guid)">
@@ -840,10 +851,13 @@
         <member name="M:Chat.Services.Implementations.UserService.GetDialogsForUser(System.Guid)">
             <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
         </member>
-        <member name="M:Chat.Services.Implementations.UserService.BindToChat(System.Guid,System.Guid,System.Guid)">
+        <member name="M:Chat.Services.Implementations.UserService.AddToGroup(System.Guid,System.Guid,System.Guid)">
             <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
         </member>
-        <member name="M:Chat.Services.Implementations.UserService.StartConvoWithUser(System.Guid,System.Guid)">
+        <member name="M:Chat.Services.Implementations.UserService.BindToChat(System.Guid,System.Guid)">
+            <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
+        </member>
+        <member name="M:Chat.Services.Implementations.UserService.StartDialog(System.Guid,System.Guid)">
             <inheritdoc cref="T:Chat.Services.Abstracts.IUserService"/>
         </member>
         <member name="T:Chat.Services.ServiceResponse">
@@ -915,6 +929,23 @@
             Проверяет корректность guid
             </summary>
             <returns>true при найденных корректных данных, иначе false</returns>
+        </member>
+        <member name="T:Chat.Utils.Extensions.JsonExtension">
+            <summary>
+            Расширение для типа JObject
+            </summary>
+        </member>
+        <member name="M:Chat.Utils.Extensions.JsonExtension.ToMessageDto(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            Конвертирует json строку в MessageDto
+            </summary>
+            <param name="obj">Экземпляр JObject</param>
+        </member>
+        <member name="M:Chat.Utils.Extensions.JsonExtension.ToGroupDto(Newtonsoft.Json.Linq.JObject)">
+            <summary>
+            Конвертирует json строку в GroupDto
+            </summary>
+            <param name="obj">Экземпляр JObject</param>
         </member>
     </members>
 </doc>

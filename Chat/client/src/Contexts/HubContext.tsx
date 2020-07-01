@@ -45,6 +45,7 @@ export const HubContextProvider: React.FC = ({children}) => {
             }
             return false
         } catch (e) {
+            console.log(e)
             return false
         }
     }

@@ -12,8 +12,8 @@ BEGIN
     SELECT Id,
            ChatId,
            ChatName,
-           Content,
-           SentTime
+           Coalesce(Content, '')         AS Content,
+           Coalesce(SentTime, GETDATE()) AS SentTime
     FROM (
              SELECT chat.Id,
                     chat.ChatId,
@@ -34,13 +34,14 @@ BEGIN
                       FROM ChatUserChatRelation AS cucr
                                JOIN ChatGroup AS cg ON cucr.ChatId = cg.Id AND cucr.UserId = @UserId
                   ) AS chat
-                      JOIN ChatTextMsg AS ctm
-                           ON (chat.ChatId = ctm.ReceiverId AND ctm.SenderId = @UserId)
-                               OR
-                              (chat.ChatId = ctm.SenderId AND ctm.ReceiverId = @UserId)
+                      LEFT JOIN ChatTextMsg AS ctm
+                                ON (chat.ChatId = ctm.ReceiverId AND ctm.SenderId = @UserId)
+                                    OR
+                                   (chat.ChatId = ctm.SenderId AND ctm.ReceiverId = @UserId)
          ) AS lastMessages
     WHERE lastDate = 1
     ORDER BY SentTime DESC
-        OFFSET @Offset ROWS FETCH NEXT @Limit ROWS ONLY;
+        OFFSET @Offset ROWS
+        FETCH NEXT @Limit ROWS ONLY;
 
 END

@@ -29,21 +29,30 @@ namespace Chat.Services.Implementations
         }
 
         /// <inheritdoc cref="IMessageService"/>
-        public ServiceResponse<int> SaveTextMessage(Guid senderId, Guid receiverId, string content)
+        public ServiceResponse<MessageDto> SaveTextMessage(Guid senderId, Guid receiverId, string content)
         {
             return ExecuteWithCatchGeneric(() =>
             {
                 if (senderId.IsEmpty() || receiverId.IsEmpty())
-                    return ServiceResponse<int>.Warning(GuidIsNotCorrect);
+                    return ServiceResponse<MessageDto>.Warning(GuidIsNotCorrect);
 
                 if (string.IsNullOrWhiteSpace(content))
-                    return ServiceResponse<int>.Warning(EmptyContentNotAllowed);
+                    return ServiceResponse<MessageDto>.Warning(EmptyContentNotAllowed);
 
                 if (!_userRepository.DoesUserBelongToChat(receiverId, senderId))
-                    return ServiceResponse<int>.Warning(NotMemberSender);
+                    return ServiceResponse<MessageDto>.Warning(NotMemberSender);
 
-                var messageId = _messageRepository.SaveMessage(senderId, receiverId, content, DateTime.Now);
-                return ServiceResponse<int>.Ok(messageId);
+                var res = _messageRepository.SaveMessage(senderId, receiverId, content, DateTime.Now);
+                return ServiceResponse<MessageDto>.Ok(new MessageDto
+                {
+                    Id = res.id,
+                    // Sender должен быть перезаписан в вызываемых методах
+                    Sender = default(UserDto),
+                    Content = content,
+                    Status = Status.Received,
+                    ReceiverId = receiverId,
+                    SentTime = res.sentTime
+                });
             });
         }
 

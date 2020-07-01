@@ -86,14 +86,14 @@ namespace Chat.Services.Implementations
         }
 
         /// <inheritdoc cref="IUserService"/>
-        public ServiceResponse BindToChat(Guid bindeeId, Guid adderId, Guid chatId)
+        public ServiceResponse AddToGroup(Guid addeeId, Guid adderId, Guid chatId)
         {
             return ExecuteWithCatch(() =>
             {
-                if (bindeeId.IsEmpty() || chatId.IsEmpty())
+                if (addeeId.IsEmpty() || chatId.IsEmpty())
                     return ServiceResponse.Warning(GuidIsNotCorrect);
 
-                var bindeeBelongs = _userRepository.DoesUserBelongToChat(chatId, bindeeId);
+                var bindeeBelongs = _userRepository.DoesUserBelongToChat(chatId, addeeId);
                 if (bindeeBelongs)
                     return ServiceResponse.Warning(TheChatAlreadyExists);
 
@@ -101,24 +101,40 @@ namespace Chat.Services.Implementations
                 if (!adderBelongs)
                     return ServiceResponse.Warning(NotMemberAdder);
 
-                _userRepository.BindToChat(bindeeId, chatId);
+                _userRepository.BindToChat(addeeId, chatId);
                 return ServiceResponse.Ok();
             });
         }
 
         /// <inheritdoc cref="IUserService"/>
-        public ServiceResponse StartConvoWithUser(Guid initiatorId, Guid interlocutorId)
+        public ServiceResponse BindToChat(Guid userId, Guid groupId)
         {
             return ExecuteWithCatch(() =>
             {
-                if (initiatorId.IsEmpty() || interlocutorId.IsEmpty())
+                if (userId.IsEmpty() || groupId.IsEmpty())
                     return ServiceResponse.Warning(GuidIsNotCorrect);
 
-                var bindeeBelongs = _userRepository.DoesUserBelongToChat(initiatorId, interlocutorId);
+                var bindeeBelongs = _userRepository.DoesUserBelongToChat(userId, groupId);
                 if (bindeeBelongs)
                     return ServiceResponse.Warning(TheChatAlreadyExists);
 
-                _userRepository.BindToChat(initiatorId, interlocutorId);
+                _userRepository.BindToChat(userId, groupId);
+                return ServiceResponse.Ok();
+            });
+        }
+
+        /// <inheritdoc cref="IUserService"/>
+        public ServiceResponse StartDialog(Guid firstUserId, Guid secondUserId)
+        {
+            return ExecuteWithCatch(() =>
+            {
+                var res1 = BindToChat(firstUserId, secondUserId);
+                if (res1.ResultType != ServiceResultType.Ok)
+                    return res1;
+                var res2 = BindToChat(secondUserId, firstUserId);
+                if (res2.ResultType != ServiceResultType.Ok)
+                    return res2;
+
                 return ServiceResponse.Ok();
             });
         }

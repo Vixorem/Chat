@@ -30,10 +30,13 @@ namespace Chat.Repositories.Implementations
             _db.GetItemListFromEntries("ChatGetGroupsForUserId", FromReader, new DbParam("@UserId", userId));
 
         ///<inheritdoc cref="IGroupRepository"/>
-        public void Add(Guid groupId, string name)
+        public Group Add(Guid groupId, string name)
         {
-            _db.ExecuteNonQuery("ChatCreateGroup",
-                new DbParam("@Id", groupId), new DbParam("@Name", name));
+            return _db.GetItemFromEntry(
+                "ChatCreateGroup",
+                FromReader,
+                new DbParam("@Id", groupId),
+                new DbParam("@Name", name));
         }
 
         ///<inheritdoc cref="IGroupRepository"/>

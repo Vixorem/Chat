@@ -16,7 +16,7 @@ namespace Chat.Services.Abstracts
         /// <param name="senderId">Guid отправителя</param>
         /// <param name="receiverId">Guid получателя</param>
         /// <param name="content">Содержание текстового сообщения</param>
-        ServiceResponse<int> SaveTextMessage(Guid senderId, Guid receiverId, string content);
+        ServiceResponse<MessageDto> SaveTextMessage(Guid senderId, Guid receiverId, string content);
 
         /// <summary>
         ///  Возвращает превью для чатов

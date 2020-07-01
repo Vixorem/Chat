@@ -10,6 +10,6 @@ CREATE PROCEDURE ChatCreateMsg @Content NVARCHAR(1000),
                                @SentTime DATETIME2
 AS
 BEGIN
-    INSERT INTO ChatTextMsg(ReceiverId, SenderId, Content, SentTime) OUTPUT INSERTED.Id
+    INSERT INTO ChatTextMsg(ReceiverId, SenderId, Content, SentTime) OUTPUT INSERTED.Id, INSERTED.SentTime
     VALUES (@ReceiverId, @SenderId, @Content, @SentTime);
 END

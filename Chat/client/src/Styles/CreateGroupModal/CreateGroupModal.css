@@ -1,0 +1,67 @@
+﻿.createGroupModal {
+    display: grid;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 15%;
+    background: #eeeeee;
+    border: 3px solid #aedaff;
+    grid-template-rows: 1fr 2fr 1fr 1fr;
+    grid-template-areas: 
+        "createGroupTitle createGroupTitle"
+        "inputGroupName inputGroupName"
+        "createGroupButton cancelCreateGroupButton"
+        "error error";
+}
+
+.errorMessage {
+    grid-area: error;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    margin-bottom: 2%;
+    color: #ff1100;
+}
+
+.createGroupTitile {
+    grid-area: createGroupTitle;
+    font-size: 120%;
+    font-weight: bold;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+}
+
+.inputGroupName {
+    grid-area: inputGroupName;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    width: 80%;
+    height: 30%;
+    min-height: 20px;
+    max-height: 50px;
+}
+
+.createGroupButton {
+    grid-area: createGroupButton;
+    display: flex;
+    justify-self: right;
+    align-self: center;
+}
+
+.cancelCreateGroupButton {
+    grid-area: cancelCreateGroupButton;
+    display: flex;
+    justify-self: right;
+    align-self: center;
+    margin: 2%;
+}
+
+.disableButton {
+    pointer-events: none;
+    cursor: not-allowed;
+    color: #4e555b;
+}

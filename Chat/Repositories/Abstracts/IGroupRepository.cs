@@ -26,7 +26,7 @@ namespace Chat.Repositories.Abstracts
         /// </summary>
         /// <param name="groupId">Guid группы</param>
         /// <param name="name">Имя группы</param>
-        void Add(Guid groupId, string name);
+        Group Add(Guid groupId, string name);
 
         /// <summary>
         /// Удаляет юзера из группы

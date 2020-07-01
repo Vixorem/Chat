@@ -80,7 +80,7 @@ namespace Chat.Controllers
         [Route("addusertogroup")]
         public ServiceResponse AddUserToGroup(Guid addeeId, Guid adderId, Guid groupId)
         {
-            return _userService.BindToChat(addeeId, adderId, groupId);
+            return _userService.AddToGroup(addeeId, adderId, groupId);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Chat.Controllers
         [Route("startconvowithuser")]
         public ServiceResponse StartConvoWithUser(Guid initiatorId, Guid interlocutorId)
         {
-            return _userService.StartConvoWithUser(initiatorId, interlocutorId);
+            return _userService.StartDialog(initiatorId, interlocutorId);
         }
         
         /// <summary>
